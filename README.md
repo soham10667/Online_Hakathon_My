@@ -103,6 +103,24 @@ To maintain a tight, high-impact scope for a hackathon or college MVP, we priori
 
 ---
 
+## Configured APIs & Integrations (Environment Variables)
+
+The project integrates **11 key third-party APIs and services** configured in the `backend/.env` file:
+
+1. **Google Gemini API** (`GEMINI_API_KEY`): Used for LLM-based meeting transcript analysis and summary generation.
+2. **Groq API** (`GROQ_API_KEY`): Fallback or alternative LLM processor.
+3. **Sarvam AI API** (`SARVAM_API_KEY`): Handles advanced speech-to-text, real-time voice translation, and text-to-speech.
+4. **LiveKit API** (`LIVEKIT_API_KEY`, `LIVEKIT_API_SECRET`, `LIVEKIT_URL`): Powers real-time WebRTC audio and video streaming rooms.
+5. **Qdrant Vector DB** (`QDRANT_URL`, `QDRANT_API_KEY`): Secure cloud-hosted vector storage for semantic transcript searching.
+6. **Slack Integration Webhook** (`SLACK_WEBHOOK_URL`): Transmits meeting action items and alerts directly to Slack channels.
+7. **Jira Integration API** (`JIRA_API_URL`, `JIRA_EMAIL`, `JIRA_API_TOKEN`): Automates task generation and status updates in Jira boards.
+8. **Trello Integration API** (`TRELLO_API_KEY`, `TRELLO_TOKEN`): Synchronizes extracted action items onto Trello boards.
+9. **ClickUp Integration API** (`CLICKUP_ACCESS_TOKEN`, `CLICKUP_LIST_ID`): Publishes meeting tasks directly onto ClickUp task lists.
+10. **Resend Email API** (`RESEND_API_KEY`): Dispatches transaction-based emails.
+11. **Nodemailer SMTP Gateway** (`SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`): Integrates with Gmail App Passwords to deliver meeting invitations.
+
+---
+
 ## Setup & Running Guide
 
 There are two ways to setup and run the application: **Quick Start (Root Folder)** or **Manual Component Start (Backend / Frontend separately)**.

@@ -154,14 +154,14 @@ export declare class MeetingsGateway implements OnGatewayConnection, OnGatewayDi
             createdAt: Date;
             updatedAt: Date;
             status: import(".prisma/client").$Enums.ActionItemStatus;
-            meetingId: string;
             text: string;
-            assigneeId: string | null;
+            meetingId: string;
             assigneeName: string | null;
             dueDate: Date | null;
             externalId: string | null;
             externalUrl: string | null;
             externalPlatform: string | null;
+            assigneeId: string | null;
         };
         message?: undefined;
     } | {

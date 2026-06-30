@@ -4,73 +4,73 @@ export declare class TeamsController {
     constructor(teamsService: TeamsService);
     getTeams(req: any): Promise<({
         members: {
-            id: string;
             email: string;
             name: string;
+            id: string;
         }[];
         channels: {
-            id: string;
             name: string;
+            id: string;
             createdAt: Date;
             description: string | null;
             teamId: string;
         }[];
     } & {
-        id: string;
         name: string;
+        id: string;
         createdAt: Date;
     })[]>;
     createTeam(req: any, body: {
         name: string;
     }): Promise<{
         members: {
-            id: string;
             email: string;
             name: string;
+            id: string;
         }[];
         channels: {
-            id: string;
             name: string;
+            id: string;
             createdAt: Date;
             description: string | null;
             teamId: string;
         }[];
     } & {
-        id: string;
         name: string;
+        id: string;
         createdAt: Date;
     }>;
     joinTeam(req: any, id: string): Promise<{
         members: {
-            id: string;
             email: string;
             name: string;
+            id: string;
         }[];
         channels: {
-            id: string;
             name: string;
+            id: string;
             createdAt: Date;
             description: string | null;
             teamId: string;
         }[];
     } & {
-        id: string;
         name: string;
+        id: string;
         createdAt: Date;
     }>;
     createChannel(id: string, body: {
         name: string;
         description?: string;
     }): Promise<{
-        id: string;
         name: string;
+        id: string;
         createdAt: Date;
         description: string | null;
         teamId: string;
     }>;
     getChannels(id: string): Promise<{
-        id: string;
         name: string;
+        id: string;
         createdAt: Date;
         description: string | null;
         teamId: string;
@@ -84,20 +84,20 @@ export declare class TeamsController {
         senderId: string;
     }[]>;
     getAllUsers(req: any): Promise<{
-        id: string;
         email: string;
         name: string;
+        id: string;
     }[]>;
     getDirectMessages(req: any, otherUserId: string): Promise<({
         sender: {
-            id: string;
             email: string;
             name: string;
+            id: string;
         };
         receiver: {
-            id: string;
             email: string;
             name: string;
+            id: string;
         };
     } & {
         id: string;

@@ -10,11 +10,11 @@ export declare class MeetingsService {
         id: string;
         createdAt: Date;
         updatedAt: Date;
+        status: import(".prisma/client").$Enums.MeetingStatus;
         code: string | null;
         title: string;
         description: string | null;
         invitedEmails: string | null;
-        status: import(".prisma/client").$Enums.MeetingStatus;
         startTime: Date;
         endTime: Date | null;
         hostId: string;
@@ -23,105 +23,105 @@ export declare class MeetingsService {
     private generateUniqueMeetingCode;
     findMeetingByCodeOrId(identifier: string): Promise<any>;
     getMeetings(userId: string): Promise<({
+        summary: {
+            id: string;
+            createdAt: Date;
+            updatedAt: Date;
+            overview: string;
+            productivityScore: number;
+            keyTakeaways: string;
+            keyDecisions: string | null;
+            nextSteps: string | null;
+            meetingId: string;
+        } | null;
         _count: {
             actionItems: number;
             transcripts: number;
             risks: number;
         };
-        summary: {
-            id: string;
-            createdAt: Date;
-            updatedAt: Date;
-            meetingId: string;
-            overview: string;
-            keyTakeaways: string;
-            keyDecisions: string | null;
-            nextSteps: string | null;
-            productivityScore: number;
-        } | null;
     } & {
         id: string;
         createdAt: Date;
         updatedAt: Date;
+        status: import(".prisma/client").$Enums.MeetingStatus;
         code: string | null;
         title: string;
         description: string | null;
         invitedEmails: string | null;
-        status: import(".prisma/client").$Enums.MeetingStatus;
         startTime: Date;
         endTime: Date | null;
         hostId: string;
         channelId: string | null;
     })[]>;
     getMeetingById(meetingId: string): Promise<{
+        summary: {
+            id: string;
+            createdAt: Date;
+            updatedAt: Date;
+            overview: string;
+            productivityScore: number;
+            keyTakeaways: string;
+            keyDecisions: string | null;
+            nextSteps: string | null;
+            meetingId: string;
+        } | null;
+        analytics: {
+            id: string;
+            createdAt: Date;
+            duration: number;
+            totalWords: number;
+            sentimentScore: number;
+            engagementScore: number;
+            talkTimeDistribution: string;
+            speakerSentiment: string;
+            meetingId: string;
+        } | null;
         actionItems: {
             id: string;
             createdAt: Date;
             updatedAt: Date;
             status: import(".prisma/client").$Enums.ActionItemStatus;
-            meetingId: string;
             text: string;
-            assigneeId: string | null;
+            meetingId: string;
             assigneeName: string | null;
             dueDate: Date | null;
             externalId: string | null;
             externalUrl: string | null;
             externalPlatform: string | null;
+            assigneeId: string | null;
         }[];
         host: {
-            id: string;
             email: string;
             name: string;
+            id: string;
         };
         transcripts: {
             id: string;
             createdAt: Date;
-            meetingId: string;
             timestamp: Date;
-            text: string;
             speakerName: string;
             speakerId: string | null;
+            text: string;
             translation: string | null;
+            meetingId: string;
         }[];
         risks: {
             id: string;
             createdAt: Date;
             status: import(".prisma/client").$Enums.RiskStatus;
-            meetingId: string;
             text: string;
+            meetingId: string;
             severity: import(".prisma/client").$Enums.RiskSeverity;
         }[];
-        summary: {
-            id: string;
-            createdAt: Date;
-            updatedAt: Date;
-            meetingId: string;
-            overview: string;
-            keyTakeaways: string;
-            keyDecisions: string | null;
-            nextSteps: string | null;
-            productivityScore: number;
-        } | null;
-        analytics: {
-            id: string;
-            createdAt: Date;
-            meetingId: string;
-            duration: number;
-            totalWords: number;
-            talkTimeDistribution: string;
-            sentimentScore: number;
-            engagementScore: number;
-            speakerSentiment: string;
-        } | null;
     } & {
         id: string;
         createdAt: Date;
         updatedAt: Date;
+        status: import(".prisma/client").$Enums.MeetingStatus;
         code: string | null;
         title: string;
         description: string | null;
         invitedEmails: string | null;
-        status: import(".prisma/client").$Enums.MeetingStatus;
         startTime: Date;
         endTime: Date | null;
         hostId: string;
@@ -131,11 +131,11 @@ export declare class MeetingsService {
         id: string;
         createdAt: Date;
         updatedAt: Date;
+        status: import(".prisma/client").$Enums.MeetingStatus;
         code: string | null;
         title: string;
         description: string | null;
         invitedEmails: string | null;
-        status: import(".prisma/client").$Enums.MeetingStatus;
         startTime: Date;
         endTime: Date | null;
         hostId: string;
@@ -144,67 +144,67 @@ export declare class MeetingsService {
     addTranscriptSegment(meetingId: string, speakerName: string, text: string, translation?: string): Promise<{
         id: string;
         createdAt: Date;
-        meetingId: string;
         timestamp: Date;
-        text: string;
         speakerName: string;
         speakerId: string | null;
+        text: string;
         translation: string | null;
+        meetingId: string;
     }>;
     endMeeting(meetingId: string): Promise<{
+        summary: {
+            id: string;
+            createdAt: Date;
+            updatedAt: Date;
+            overview: string;
+            productivityScore: number;
+            keyTakeaways: string;
+            keyDecisions: string | null;
+            nextSteps: string | null;
+            meetingId: string;
+        } | null;
+        analytics: {
+            id: string;
+            createdAt: Date;
+            duration: number;
+            totalWords: number;
+            sentimentScore: number;
+            engagementScore: number;
+            talkTimeDistribution: string;
+            speakerSentiment: string;
+            meetingId: string;
+        } | null;
         actionItems: {
             id: string;
             createdAt: Date;
             updatedAt: Date;
             status: import(".prisma/client").$Enums.ActionItemStatus;
-            meetingId: string;
             text: string;
-            assigneeId: string | null;
+            meetingId: string;
             assigneeName: string | null;
             dueDate: Date | null;
             externalId: string | null;
             externalUrl: string | null;
             externalPlatform: string | null;
+            assigneeId: string | null;
         }[];
         risks: {
             id: string;
             createdAt: Date;
             status: import(".prisma/client").$Enums.RiskStatus;
-            meetingId: string;
             text: string;
+            meetingId: string;
             severity: import(".prisma/client").$Enums.RiskSeverity;
         }[];
-        summary: {
-            id: string;
-            createdAt: Date;
-            updatedAt: Date;
-            meetingId: string;
-            overview: string;
-            keyTakeaways: string;
-            keyDecisions: string | null;
-            nextSteps: string | null;
-            productivityScore: number;
-        } | null;
-        analytics: {
-            id: string;
-            createdAt: Date;
-            meetingId: string;
-            duration: number;
-            totalWords: number;
-            talkTimeDistribution: string;
-            sentimentScore: number;
-            engagementScore: number;
-            speakerSentiment: string;
-        } | null;
     } & {
         id: string;
         createdAt: Date;
         updatedAt: Date;
+        status: import(".prisma/client").$Enums.MeetingStatus;
         code: string | null;
         title: string;
         description: string | null;
         invitedEmails: string | null;
-        status: import(".prisma/client").$Enums.MeetingStatus;
         startTime: Date;
         endTime: Date | null;
         hostId: string;
@@ -216,21 +216,21 @@ export declare class MeetingsService {
             createdAt: Date;
             updatedAt: Date;
             status: import(".prisma/client").$Enums.ActionItemStatus;
-            meetingId: string;
             text: string;
-            assigneeId: string | null;
+            meetingId: string;
             assigneeName: string | null;
             dueDate: Date | null;
             externalId: string | null;
             externalUrl: string | null;
             externalPlatform: string | null;
+            assigneeId: string | null;
         }[];
         risks: {
             id: string;
             createdAt: Date;
             status: import(".prisma/client").$Enums.RiskStatus;
-            meetingId: string;
             text: string;
+            meetingId: string;
             severity: import(".prisma/client").$Enums.RiskSeverity;
         }[];
     } | null>;
@@ -244,14 +244,14 @@ export declare class MeetingsService {
     }>;
     createDirectMessage(senderId: string, receiverId: string, text: string): Promise<{
         sender: {
-            id: string;
             email: string;
             name: string;
+            id: string;
         };
         receiver: {
-            id: string;
             email: string;
             name: string;
+            id: string;
         };
     } & {
         id: string;
@@ -265,14 +265,14 @@ export declare class MeetingsService {
         createdAt: Date;
         updatedAt: Date;
         status: import(".prisma/client").$Enums.ActionItemStatus;
-        meetingId: string;
         text: string;
-        assigneeId: string | null;
+        meetingId: string;
         assigneeName: string | null;
         dueDate: Date | null;
         externalId: string | null;
         externalUrl: string | null;
         externalPlatform: string | null;
+        assigneeId: string | null;
     }>;
     getMeetingAnalytics(meetingId: string): Promise<{
         meetingId: string;
@@ -306,12 +306,12 @@ export declare class MeetingsService {
         segment: {
             id: string;
             createdAt: Date;
-            meetingId: string;
             timestamp: Date;
-            text: string;
             speakerName: string;
             speakerId: string | null;
+            text: string;
             translation: string | null;
+            meetingId: string;
         };
         diagram: any;
     }>;
@@ -327,13 +327,13 @@ export declare class MeetingsService {
         createdAt: Date;
         updatedAt: Date;
         status: import(".prisma/client").$Enums.ActionItemStatus;
-        meetingId: string;
         text: string;
-        assigneeId: string | null;
+        meetingId: string;
         assigneeName: string | null;
         dueDate: Date | null;
         externalId: string | null;
         externalUrl: string | null;
         externalPlatform: string | null;
+        assigneeId: string | null;
     }>;
 }

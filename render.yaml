@@ -2,7 +2,7 @@ services:
   # Python Backend Service
   - type: web
     name: meeting-copilot-backend
-    env: docker
+    runtime: docker
     dockerfilePath: backend/Dockerfile
     dockerContext: backend
     plan: free
@@ -37,7 +37,8 @@ services:
   # Qdrant Vector DB (Self-hosted docker container)
   - type: web
     name: meeting-copilot-qdrant
-    image: qdrant/qdrant:latest
+    runtime: image
+    imagePath: docker.io/qdrant/qdrant:latest
     plan: free
     envVars:
       - key: PORT

@@ -42,7 +42,7 @@ def send_invitation_email(recipient_emails: str, meeting_title: str, meeting_cod
     if not emails:
         return
 
-     join_link = f"https://online-hakathon-e5cv.onrender.com/join?code={meeting_code}"
+     join_link = f"https://online-hakathon-e5cv.onrender.com//join?code={meeting_code}"
 
     html_content = f"""
     <html>

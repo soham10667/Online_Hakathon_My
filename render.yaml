@@ -37,8 +37,7 @@ services:
   # Qdrant Vector DB (Self-hosted docker container)
   - type: web
     name: meeting-copilot-qdrant
-    env: docker
-    dockerImage: qdrant/qdrant:latest
+    image: qdrant/qdrant:latest
     plan: free
     envVars:
       - key: PORT

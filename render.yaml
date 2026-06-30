@@ -62,6 +62,7 @@ services:
   - type: redis
     name: meeting-copilot-redis
     plan: free
+    ipAllowList: []
 
 databases:
   # Primary PostgreSQL Database

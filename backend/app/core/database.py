@@ -7,6 +7,10 @@ db_url = settings.DATABASE_URL
 if db_url.startswith("file:"):
     db_url = db_url.replace("file:", "sqlite:///", 1)
 
+# Clean up Prisma-specific query parameters (like pgbouncer) that psycopg2 doesn't support
+if "postgresql" in db_url and "?" in db_url:
+    db_url = db_url.split("?")[0]
+
 connect_args = {}
 if "sqlite" in db_url:
     connect_args = {"check_same_thread": False}

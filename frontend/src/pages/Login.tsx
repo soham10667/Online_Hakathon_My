@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { LogIn, UserPlus, Sparkles, Video } from 'lucide-react';
+import { API_URL } from '../config';
 
 interface LoginProps {
   onLogin: (token: string, user: any) => void;
@@ -42,7 +43,8 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
 
       onLogin(data.token, data.user);
     } catch (err: any) {
-      setError(err.message || 'Something went wrong');
+      const targetUrl = API_URL ? `${API_URL}/auth/${endpoint}` : `http://localhost:5000/auth/${endpoint}`;
+      setError(`${err.message || 'Something went wrong'} (Target: ${targetUrl})`);
     } finally {
       setLoading(false);
     }

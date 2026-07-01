@@ -194,7 +194,7 @@ export const ChannelView: React.FC<ChannelViewProps> = ({
   const triggerChannelAiSummary = async () => {
     setAiLoading(true);
     try {
-      const response = await fetch(`https://online-hakathon-e5cv.onrender.com/teams/channels/${channelId}/ai-summary`, {
+      const response = await fetch(`http://localhost:5000/teams/channels/${channelId}/ai-summary`, {
         method: 'POST',
         headers: { Authorization: `Bearer ${token}` }
       });

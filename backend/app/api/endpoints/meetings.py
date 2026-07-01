@@ -42,7 +42,8 @@ def send_invitation_email(recipient_emails: str, meeting_title: str, meeting_cod
     if not emails:
         return
 
-    join_link = f"https://online-hakathon-e5cv.onrender.com//join?code={meeting_code}"
+    frontend_url = os.environ.get("FRONTEND_URL", "http://localhost:5173").rstrip("/")
+    join_link = f"{frontend_url}/join?code={meeting_code}"
 
     html_content = f"""
     <html>

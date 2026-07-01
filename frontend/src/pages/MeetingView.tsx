@@ -120,7 +120,7 @@ export const MeetingView: React.FC<MeetingViewProps> = ({ token, meetingId, curr
   };
 
   const handleDownloadPDF = () => {
-    window.open(`http://localhost:5000/meetings/${meetingId}/pdf`, '_blank');
+    window.open(`${API_URL}/meetings/${meetingId}/pdf`, '_blank');
   };
 
   const formatDueDate = (dateStr: string) => {

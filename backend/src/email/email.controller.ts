@@ -91,7 +91,7 @@ export class EmailController {
 
     const meeting = await this.meetingsService.getMeetingById(meetingId);
     const hostName = req.user?.name || req.user?.email || 'Meeting Host';
-    const baseUrl = appBaseUrl || process.env.APP_BASE_URL || 'https://online-hakathon-e5cv.onrender.com/';
+    const baseUrl = appBaseUrl || process.env.APP_BASE_URL || 'http://localhost:5173';
     const joinLink = `${baseUrl}/join?code=${meeting.code}`;
 
     const result = await this.emailService.sendMeetingInvite({

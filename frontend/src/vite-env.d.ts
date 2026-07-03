@@ -60,3 +60,15 @@ declare namespace React {
   type CSSProperties = any;
   type FC<T = any> = any;
 }
+
+declare module 'react-router-dom' {
+  export function useNavigate(): (to: string, options?: any) => void;
+  export function useParams<T = any>(): T;
+  export function useSearchParams(): [any, (nextInit: any) => void];
+  export const Route: any;
+  export const Routes: any;
+  export const Link: any;
+  export const BrowserRouter: any;
+  export const Navigate: any;
+}
+

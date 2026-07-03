@@ -41,7 +41,7 @@ def build_invite_email_html(recipient_name: str, meeting_title: str, meeting_cod
         <tr>
             <td style="padding:6px 0;">
                 <div style="display:flex;align-items:flex-start;gap:10px;">
-                    <div style="min-width:22px;height:22px;background:linear-gradient(135deg,#6d28d9,#0891b2);border-radius:50%;color:#fff;font-size:11px;font-weight:700;text-align:center;line-hei[...]"
+                    <div style="min-width:22px;height:22px;background:linear-gradient(135deg,#6d28d9,#0891b2);border-radius:50%;color:#fff;font-size:11px;font-weight:700;text-align:center;line-height:22px;">{num}</div>
                     <span style="color:#a1a1b3;font-size:13px;line-height:22px;">{text}</span>
                 </div>
             </td>
@@ -118,12 +118,14 @@ def build_invite_email_html(recipient_name: str, meeting_title: str, meeting_cod
 
               <!-- CTA Button -->
               <div style="text-align:center;margin-bottom:28px;">
-                <a href="{join_link}" target="_blank" style="display:inline-block;background:linear-gradient(135deg,#6d28d9,#0891b2);color:#fff;font-size:16px;font-weight:700;text-decoration:none;padding:14px 28px;border-radius:999px;">🚀 Join Meeting Now</a>
+                <a href="{join_link}" target="_blank" style="display:inline-block;background:linear-gradient(135deg,#6d28d9,#0891b2);color:#fff;font-size:16px;font-weight:700;text-decoration:none;padding:16px 40px;border-radius:10px;letter-spacing:0.02em;box-shadow:0 8px 24px rgba(109,40,217,0.35);">
+                  🚀 Join Meeting Now
+                </a>
               </div>
 
               <!-- Or use code section -->
               <div style="background:#0f0f1a;border:1px dashed #2a2a3e;border-radius:10px;padding:18px;text-align:center;margin-bottom:28px;">
-                <p style="color:#a1a1b3;font-size:13px;margin:0 0 8px;">Or join with the meeting code on <a href="{join_link.split('/join')[0]}/join" style="color:#7c6de8;text-decoration:none;">TeamsSpace</a></p>
+                <p style="color:#a1a1b3;font-size:13px;margin:0 0 8px;">Or join with the meeting code on <a href="{join_link.split('/join')[0]}/join" style="color:#7c6de8;text-decoration:none;">TeamsSpace</a>:</p>
                 <div style="font-size:24px;font-weight:800;color:#a78bfa;letter-spacing:0.12em;">{meeting_code}</div>
               </div>
 
@@ -179,13 +181,19 @@ def send_meeting_invite(recipient_email: str, meeting_title: str, meeting_code: 
     text_body = build_plain_text_body(recipient_name, meeting_title, meeting_code, host_name, formatted_date, join_link)
     subject = f'📹 You\'re invited to "{meeting_title}" — Join Now'
 
-    smtp_host = os.environ.get("SMTP_HOST", "smtp.gmail.com")
+    smtp_pass = os.environ.get("SMTP_PASS")
+    smtp_host = os.environ.get("SMTP_HOST")
+    if not smtp_host:
+        if smtp_pass and smtp_pass.startswith("xsmtpsib-"):
+            smtp_host = "smtp-relay.brevo.com"
+        else:
+            smtp_host = "smtp.gmail.com"
+
     try:
         smtp_port = int(os.environ.get("SMTP_PORT", "587"))
     except ValueError:
         smtp_port = 587
     smtp_user = os.environ.get("SMTP_USER")
-    smtp_pass = os.environ.get("SMTP_PASS")
 
     is_dummy_smtp = not smtp_pass or "your_gmail_app_password_here" in smtp_pass or "placeholder" in smtp_pass or smtp_pass.strip() == ""
 

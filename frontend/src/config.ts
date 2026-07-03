@@ -1,4 +1,4 @@
-const rawApiUrl = import.meta.env.VITE_API_URL || 'https://meeting-copilot-backend-5okc.onrender.com';
+const rawApiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5173';
 const getDefaultApiUrl = () => {
   if (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
     return 'http://localhost:5000';

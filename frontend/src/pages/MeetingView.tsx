@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { io, Socket } from 'socket.io-client';
-import { API_URL } from '../config';
+import { io } from 'socket.io-client';
+import type { Socket } from 'socket.io-client';
+import { API_URL, getResolvedVideoUrl, downloadFile } from '../config';
 import { Mic, MicOff, Clock, Play, Square, CheckSquare, AlertTriangle, AlertCircle, RefreshCw, Send, ExternalLink, Mail, FileText, Calendar, Copy, Video, VideoOff, Sparkles, PenTool, X, Monitor, MonitorOff, PictureInPicture, Maximize, Tv, MoreVertical, BarChart2 } from 'lucide-react';
 import { useWebRTC } from '../hooks/useWebRTC';
 import { useSpeechRecognition } from '../hooks/useSpeechRecognition';
@@ -1468,7 +1469,7 @@ export const MeetingView: React.FC<MeetingViewProps> = ({ token, meetingId, curr
                 <>
                   <div style={{ flex: 1, minWidth: '320px', borderRadius: 'var(--radius-md)', overflow: 'hidden', border: '1px solid var(--border-color)', background: '#000', aspectRatio: '16/9', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     <video 
-                      src={recordedVideoUrl} 
+                      src={getResolvedVideoUrl(recordedVideoUrl)} 
                       controls 
                       style={{ width: '100%', height: '100%' }}
                     />
@@ -1489,14 +1490,13 @@ export const MeetingView: React.FC<MeetingViewProps> = ({ token, meetingId, curr
                         <div><strong>Format:</strong> WebM (1080p)</div>
                       </div>
                     </div>
-                    <a 
-                      href={recordedVideoUrl} 
-                      download={`meeting_recording_${meetingId}.webm`}
+                    <button 
+                      onClick={() => downloadFile(getResolvedVideoUrl(recordedVideoUrl), `meeting_recording_${meetingId}.webm`)}
                       className="btn btn-primary"
-                      style={{ width: '100%', justifyContent: 'center', gap: '8px', textDecoration: 'none', padding: '10px 0', fontSize: '0.85rem', display: 'flex', alignItems: 'center' }}
+                      style={{ width: '100%', justifyContent: 'center', gap: '8px', border: 'none', cursor: 'pointer', padding: '10px 0', fontSize: '0.85rem', display: 'flex', alignItems: 'center' }}
                     >
                       📥 Download Recording
-                    </a>
+                    </button>
                   </div>
                 </>
               ) : (

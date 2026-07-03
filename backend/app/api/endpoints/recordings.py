@@ -5,7 +5,7 @@ import shutil
 import logging
 from datetime import datetime
 from typing import Optional, List
-from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, Form, status
+from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, Form, status, Request
 from fastapi.responses import FileResponse
 from app.api.deps import get_current_user
 
@@ -42,6 +42,7 @@ def save_recordings(recordings: List[dict]):
 
 @router.post("")
 async def save_recording(
+    request: Request,
     video: UploadFile = File(...),
     meetingId: str = Form(...),
     meetingTitle: str = Form(...),
@@ -74,9 +75,11 @@ async def save_recording(
     if os.path.exists(file_path):
         file_size = os.path.getsize(file_path)
 
-    # In production, rewrite to absolute URL. Let's make sure it matches the current request origin or standard format.
-    # We will use http://localhost:5000/recordings/file/{file_name} as standard, and fetch override in main.tsx handles it.
-    file_url = f"http://localhost:5000/recordings/file/{file_name}"
+    # Build file URL using request.base_url for production support
+    base_url = str(request.base_url)
+    if base_url.endswith("/"):
+        base_url = base_url[:-1]
+    file_url = f"{base_url}/recordings/file/{file_name}"
 
     try:
         duration_num = int(duration)

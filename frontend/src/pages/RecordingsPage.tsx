@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { getResolvedVideoUrl, downloadFile } from '../config';
 import { Video, Calendar, Clock, Download, Film, Play, Trash2, X, Lock } from 'lucide-react';
 
 interface Recording {
@@ -43,12 +44,7 @@ export const RecordingsPage = ({ token }: { token: string }) => {
 
   const handleDownload = (rec: Recording, e: React.MouseEvent) => {
     e.stopPropagation();
-    const a = document.createElement('a');
-    a.href = rec.fileUrl;
-    a.download = rec.fileName;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
+    downloadFile(getResolvedVideoUrl(rec.fileUrl), rec.fileName);
   };
 
   const handleDelete = async (id: string, e: React.MouseEvent) => {
@@ -264,7 +260,7 @@ export const RecordingsPage = ({ token }: { token: string }) => {
               {playingRecording.meetingTitle}
             </h3>
             <div style={{ width: '100%', aspectRatio: '16/9', background: '#000', borderRadius: '8px', overflow: 'hidden' }}>
-              <video src={playingRecording.fileUrl} controls autoPlay style={{ width: '100%', height: '100%' }} />
+              <video src={getResolvedVideoUrl(playingRecording.fileUrl)} controls autoPlay style={{ width: '100%', height: '100%' }} />
             </div>
             <div style={{ marginTop: '16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.85rem', color: '#aaa' }}>
               <span>Recorded: {new Date(playingRecording.createdAt).toLocaleString()}</span>

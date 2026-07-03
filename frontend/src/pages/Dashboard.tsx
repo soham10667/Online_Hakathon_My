@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect, type FC } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Play, Plus, Video, Calendar, CheckSquare, AlertTriangle, BarChart2, ExternalLink, Search, Clipboard, Check } from 'lucide-react';
 
@@ -7,7 +7,7 @@ interface DashboardProps {
   onSelectMeeting: (meetingId: string) => void;
 }
 
-export const Dashboard: React.FC<DashboardProps> = ({ token, onSelectMeeting }) => {
+export const Dashboard: FC<DashboardProps> = ({ token, onSelectMeeting }) => {
   const navigate = useNavigate();
   const [meetings, setMeetings] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -221,7 +221,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ token, onSelectMeeting }) 
             {activeTab === 'upcoming' && (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 {upcomingMeetings.map((meeting) => (
-                  <MeetingRow key={meeting.id} meeting={meeting} onSelect={onSelectMeeting} />
+                  <MeetingRow key={meeting.id} meeting={meeting} onSelect={onSelectMeeting} savedRecordingMeetingIds={savedRecordingMeetingIds} />
                 ))}
                 {upcomingMeetings.length === 0 && (
                   <div style={{ textAlign: 'center', padding: '40px 0', color: 'var(--text-secondary)' }}>
@@ -235,7 +235,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ token, onSelectMeeting }) 
             {activeTab === 'past' && (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 {pastMeetings.map((meeting) => (
-                  <MeetingRow key={meeting.id} meeting={meeting} onSelect={onSelectMeeting} />
+                  <MeetingRow key={meeting.id} meeting={meeting} onSelect={onSelectMeeting} savedRecordingMeetingIds={savedRecordingMeetingIds} />
                 ))}
                 {pastMeetings.length === 0 && (
                   <div style={{ textAlign: 'center', padding: '40px 0', color: 'var(--text-secondary)' }}>
@@ -253,7 +253,7 @@ export const Dashboard: React.FC<DashboardProps> = ({ token, onSelectMeeting }) 
 };
 
 // Extracted Sub-row Component for styling alignment
-const MeetingRow: React.FC<{ meeting: any; onSelect: (id: string) => void }> = ({ meeting, onSelect }) => {
+const MeetingRow: FC<{ meeting: any; onSelect: (id: string) => void; savedRecordingMeetingIds: string[] }> = ({ meeting, onSelect, savedRecordingMeetingIds }) => {
   const [copied, setCopied] = useState(false);
 
   const getJoinLink = () =>

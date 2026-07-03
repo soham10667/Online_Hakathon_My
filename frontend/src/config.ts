@@ -23,3 +23,11 @@ const getFormattedApiUrl = (url: string) => {
 };
 
 export const API_URL = getFormattedApiUrl(rawApiUrl);
+
+export const getResolvedVideoUrl = (url: string | null | undefined) => {
+  if (!url) return '';
+  if (url.startsWith('http://localhost:5000')) {
+    return url.replace('http://localhost:5000', API_URL);
+  }
+  return url;
+};

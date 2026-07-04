@@ -1,185 +1,174 @@
-# AI Meeting Copilot for Remote Teams
+<img width="4320" height="1440" alt="hh26 main poster 2 with sponsors 3x1 (4320 x 1440 px) (2)" src="https://github.com/user-attachments/assets/c698b2cd-da84-4cb0-9276-125c6a7244aa" />
 
-An interactive, real-time AI Meeting Copilot that streams meeting conversations, extracts action items dynamically, identifies blockers and risks, and compiles professional meeting summaries and analytics using **FastAPI (Python)**, **Socket.IO WebSockets**, **SQLAlchemy**, **Qdrant**, **Redis**, **AWS S3**, **Groq API**, and **LangGraph**.
 
----
+# 🚀 AI Meeting Copilot For Remote Teams
 
-## Capabilities
-
-### AI Capabilities
-* **Real-time Transcription & Summarization**: Process speech streams chunk-by-chunk and translate/transcribe multilingual dialogues.
-* **Accent & Speaker Handling**: Gracefully handle diverse accents and automatically map dialogue turns through speaker diarization.
-* **Summaries for Absent Participants**: Generate highly structured meeting minutes and overview briefs, allowing absent team members to quickly catch up.
-* **Semantic Search Knowledge Base**: Store dialogue embeddings inside **Qdrant** and run semantic queries across all past discussions, decisions, and tasks.
-* **Distributed Time Zone Support**: Format all deadlines, action items, and schedules into timezone-aware UTC timestamps for remote global teams.
-
-### Analytics Capabilities
-* **Meeting Attendance Tracker**: Auto-detect participating speakers and track meeting presence.
-* **Participant Engagement Metrics**: Measure meeting engagement scores based on turn distribution balance and dialogue interactivity.
-* **Action Item Tracking**: Track responsibilities and task assignments.
-* **Collaboration Productivity Trends**: Estimate cooperation productivity scores (0-100) per session to monitor team performance over time.
+> Interactive, real-time AI Meeting Copilot that streams conversations, extracts action items dynamically, identifies blockers/risks, and compiles professional meeting summaries and analytics.
 
 ---
 
-## MVP Priority Focus (Hackathon / Hack-Project Scope)
-To maintain a tight, high-impact scope for a hackathon or college MVP, we prioritized:
-1. **Real-time socket-based transcription**
-2. **Multi-agent AI Summarization**
-3. **Action item responsibility and deadline assignment**
-4. **Qdrant-based Semantic Search**
-5. **Follow-up recommendation automation**
-6. **Dockerized PostgreSQL, Redis, and Qdrant setup**
+## 📌 Problem & Domain
 
-*Advanced third-party connectors (Slack, Jira, Trello, ClickUp, Google Calendar) and full analytics dashboards can be scaled incrementally.*
+- **Meeting Fatigue & Context Gaps:** Remote teams suffer from meeting fatigue, leading to manual note-taking errors and lost context or key decisions.
+- **Accent & Transcription Barriers:** Traditional speech-to-text tools struggle with diverse regional accents and code-mixed languages (such as Hinglish).
+- **Timezone Complexity:** Managing deadlines and action items across distributed global timezones makes post-meeting tracking complex.
 
----
+**Themes Selected (at least one):**
+- [x] Human Experience & Productivity  
+- [ ] Climate & Sustainability Systems  
+- [ ] HealthTech & Bio Platforms  
+- [ ] Learning & Knowledge Systems  
+- [x] Work, Finance & Digital Economy  
+- [ ] Infrastructure, Mobility & Smart Systems  
+- [ ] Trust, Identity & Security  
+- [ ] Media, Social & Interactive Platforms  
+- [ ] Public Systems, Governance and Civic Tech  
+- [x] Developer Tools & Software Infrastructure  
 
-## Tech Stack
-
-* **Frontend**: React (Vite), TypeScript, Vanilla CSS (Premium dark mode glassmorphism theme), and Socket.IO client.
-* **Backend**: FastAPI (Python), Socket.IO ASGI Gateway, JWT Auth.
-* **Database**: PostgreSQL (Production) / SQLite (Local file development).
-* **Vector Store**: Qdrant Vector DB (for semantic transcript search).
-* **Cache & Pub/Sub**: Redis.
-* **Object Store**: AWS S3 (for archiving raw meeting transcripts).
-* **Orchestration & LLM**: LangGraph multi-agent network using the Groq API (fallback to Gemini or Mock parser if keys are missing).
+*(You can select multiple themes if applicable)*
 
 ---
 
-## Project Structure
+## 🎯 Objective
 
-```
-├── backend/
-│   ├── prisma/              # Prisma DB Schemas & Migrations
-│   ├── src/                 # Active NestJS Backend
-│   │   ├── main.ts          # NestJS Server entry point
-│   │   ├── app.module.ts    # Main NestJS Application Module
-│   │   ├── ai/              # Gemini/LLM analysis services
-│   │   ├── auth/            # JWT authentication controller & guards
-│   │   ├── email/           # Email invites & notifications (Nodemailer)
-│   │   ├── integrations/    # External app connectors
-│   │   ├── livekit/         # LiveKit audio/video session management
-│   │   ├── meetings/        # Meeting controllers, Socket.IO gateway, services
-│   │   ├── recordings/      # Meeting recording database service
-│   │   └── teams/           # Workspace, Channels & DM group logic
-│   ├── app/                 # FastAPI Backend (Python service)
-│   │   ├── main.py          # FastAPI application bootstrapper
-│   │   ├── api/             # JWT auth & endpoints
-│   │   └── ai_workflow/     # LangGraph multi-agent systems
-│   ├── tsconfig.json        # TypeScript configuration
-│   ├── package.json         # Node.js dependencies & dev scripts
-│   └── docker-compose.yml   # Dev DB, Redis, and Qdrant setup
-└── frontend/
-    ├── src/                 # React Frontend
-    │   ├── main.tsx         # Frontend entry point
-    │   ├── App.tsx          # App routing, layout & sidebar navigation
-    │   ├── index.css        # Theme styles & global layout definitions
-    │   ├── config.ts        # Frontend URL variables
-    │   ├── hooks/           # Custom React hooks (e.g. useSpeechRecognition)
-    │   └── pages/           # Application views
-    │       ├── Login.tsx            # Login Page
-    │       ├── Dashboard.tsx        # Meeting workspace list & creation dashboard
-    │       ├── CreateMeeting.tsx    # Live/Scheduled meeting room wizard
-    │       ├── JoinMeeting.tsx      # Landing page code joining form
-    │       ├── MeetingView.tsx      # Real-time WebRTC room, transcription, & notes
-    │       ├── WaitingRoom.tsx      # Lobby prior to entering video meetings
-    │       ├── RecordingsPage.tsx   # Saved recordings player
-    │       ├── CalendarView.tsx     # Team scheduled session scheduler calendar
-    │       ├── Tasks.tsx            # Board tracking tasks extracted by AI
-    │       ├── ChannelView.tsx      # Thread-based team channel workspace
-    │       ├── DirectMessageView.tsx# Chat messaging dialogs
-    │       ├── Integrations.tsx     # Connected external platforms configuration
-    │       ├── EmailInviteModal.tsx # Dialog to send out invite URLs
-    │       └── LandingPage.tsx      # Introductory product showcase website
-    ├── package.json         # React packages & scripts
-    └── vite.config.ts       # Vite compilation settings
-├── ai_copilot/              # AI Speech & Voice Agent Helper (Python)
-│   ├── main.py              # Main voice agent loop
-│   ├── agent.py             # Agent LLM reasoning & prompt logic
-│   ├── stt_engine.py        # Speech-to-Text (STT) transcription handler
-│   ├── tts_engine.py        # Text-to-Speech (TTS) audio generator
-│   └── requirements.txt     # Python requirements for the voice agent
-```
+Our project streamlines collaboration for distributed teams by converting live meeting streams into structured, actionable databases. It serves:
+- **Target users:** Remote engineers, product managers, global stakeholders, and team leads.
+- **The pain point:** Missed deadlines, verbal agreements lost to history, accent-related communication gaps, and manual ClickUp ticket creation.
+- **The value:** Live speech-to-text with timezone-aware action lists, multi-agent AI digests, and direct Slack/ClickUp integrations.
 
 ---
 
-## Configured APIs & Integrations (Environment Variables)
+## 🧠 Team & Approach
 
-The project integrates **11 key third-party APIs and services** configured in the `backend/.env` file:
+### Team Name:  
+`Quantum Coders`
 
-1. **Google Gemini API** (`GEMINI_API_KEY`): Used for LLM-based meeting transcript analysis and summary generation.
-2. **Groq API** (`GROQ_API_KEY`): Fallback or alternative LLM processor.
-3. **Sarvam AI API** (`SARVAM_API_KEY`): Handles advanced speech-to-text, real-time voice translation, and text-to-speech.
-4. **LiveKit API** (`LIVEKIT_API_KEY`, `LIVEKIT_API_SECRET`, `LIVEKIT_URL`): Powers real-time WebRTC audio and video streaming rooms.
-5. **Qdrant Vector DB** (`QDRANT_URL`, `QDRANT_API_KEY`): Secure cloud-hosted vector storage for semantic transcript searching.
-6. **Slack Integration Webhook** (`SLACK_WEBHOOK_URL`): Transmits meeting action items and alerts directly to Slack channels.
-7. **ClickUp Integration API** (`CLICKUP_ACCESS_TOKEN`, `CLICKUP_LIST_ID`): Publishes meeting tasks directly onto ClickUp task lists.
-8. **Resend Email API** (`RESEND_API_KEY`): Dispatches transaction-based emails.
-9. **Nodemailer SMTP Gateway** (`SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`): Integrates with Gmail App Passwords to deliver meeting invitations.
+### Team Members:  
+- Soham Sirpurwar ([GitHub](https://github.com/soham10667/Online_Hakathon_My.git) / [LinkedIn](https://www.linkedin.com/in/soham-sirpurwar-5b5b4a366/) / College Student)  
+- Sarang Channe  
+- Sujal Pawar 
+- Dipti Khobragade
 
----
-
-## Setup & Running Guide
-
-There are two ways to setup and run the application: **Quick Start (Root Folder)** or **Manual Component Start (Backend / Frontend separately)**.
+### Your Approach:
+- **Why we chose this problem:** Productive collaboration is the backbone of remote work, yet hours are wasted manually documenting meetings or chasing down post-meeting alignment.
+- **Key challenges addressed:** Handling real-time low-latency audio transmission, processing Hinglish and regional speech with Sarvam AI, and building deterministic tasks from non-deterministic meeting summaries using LangGraph.
+- **Iterations & Breakthroughs:** Evolved from simple transcription to an agentic multi-stage pipeline utilizing Qdrant for semantic vector memory and Resend for automatic notification invite links.
 
 ---
 
-### Method A: Quick Start (Root Folder)
-You can set up and run the entire project (both backend and frontend) directly from the root directory:
+## 🛠️ Tech Stack
 
-1. **Install Root and Project Dependencies**:
+### Core Technologies Used:
+- **Frontend:** React (Vite), TypeScript, Socket.IO client, Tailwind / Vanilla CSS
+- **Backend:** FastAPI (Python), Socket.IO ASGI Gateway, JWT Auth
+- **Database:** PostgreSQL / SQLite (Development)
+- **APIs:** Google Gemini API, Groq API, Sarvam AI API, LiveKit API, Resend API
+- **Hosting / Storage:** AWS S3 (audio archives), Qdrant Cloud (vector index), Redis (cache)
+
+### Additional Technologies Used (Optional):
+- [x] AI / ML  
+- [ ] Web3 / Blockchain  
+- [ ] Cyber Security 
+- [x] Cloud  
+
+---
+
+## 🏆 Sponsored Track (Optional)
+
+Select if your project participates in any track:
+
+- [ ] **Expo Track** – Built using Expo  
+- [ ] **Neo4j Track** – Uses AuraDB as primary database  
+- [ ] **Base44 Track** – Prototype/Final Product built using Base44  
+- [x] **Render Track** – Project services deployed and managed via Render cloud hosting configuration (`render.yaml`)
+
+Provide a short note on how you used the partner technology:
+
+> *We integrated **Sarvam AI's** advanced models (`saaras:v3` and `bulbul:v3`) for Indian-accent transcription, Hinglish code-mixed support, and a text-to-speech voice assistant to read back meeting alerts and summaries. We also utilized **Google Gemini & Groq APIs** to power our LangGraph agentic reasoning backend, and **Qdrant Vector DB** for semantic memory. Additionally, we configured the entire application infrastructure (FastAPI backend, React static site, and Redis database caching services) for streamlined deployment on **Render** using our [`render.yaml`](file:///e:/Online_Hakathon_Fresh/render.yaml) file.*
+
+---
+
+## ✨ Key Features
+
+Highlight the most important features of your project:
+
+- ✅ **Real-Time Transcription & Translation:** Real-time speech stream translation & transcription handling Hinglish/regional dialects.
+- ✅ **Multi-Agent AI Summarization:** LangGraph network generating key summaries, next steps, and absent-member catch-up notes.
+- ✅ **Dynamic Action Item & Risk Tracker:** Automated task delegation and timezone-aware deadlines posted straight to ClickUp/Slack.
+- ✅ **Semantic Knowledge Search:** Natural language search powered by Qdrant across all historical meetings.
+- ✅ **Collaboration Analytics Dashboard:** Turn-taking ratio, attendance tracker, and automatic speaker sentiment analysis.
+
+---
+
+## 📽️ Demo & Deliverables
+
+- **Demo Video Link (Mandatory):** [Paste link]  
+- **Deployment Link (Recommended):** [https://online-hakathon-my.onrender.com/](https://online-hakathon-my.onrender.com/)
+- **Pitch Deck / PPT (Optional):** [Paste link]  
+
+---
+
+## ✅ Tasks & Bonus Checklist
+
+- [ ] All team members completed the mandatory social task  
+- [ ] Bonus Task 1 – Badge sharing  
+- [ ] Bonus Task 2 – Blog/article  
+
+---
+
+## 🧪 How to Run the Project
+
+### Requirements:
+- **Node.js** (v18+)
+- **Python** (3.10+)
+- **Docker** (for PostgreSQL, Redis, Qdrant setup)
+- **API Keys:** `GEMINI_API_KEY`, `GROQ_API_KEY`, `SARVAM_API_KEY`, `LIVEKIT_API_KEY` (or runs in **Mock AI Mode** if keys are omitted).
+
+### Local Setup:
+1. **Clone the Repository & Install Dependencies**:
    ```bash
    npm install
    npm run install:all
    ```
 
 2. **Configure Environment Variables**:
-   Create or verify the `.env` file in the `backend/` directory:
+   Create a `.env` file in the `backend/` directory:
    ```env
    PORT=5000
    DATABASE_URL="sqlite:///./dev.db"
    JWT_SECRET="super-secret-copilot-key-change-in-production"
-   GROQ_API_KEY=""
-   GEMINI_API_KEY=""
+   GROQ_API_KEY="your-groq-key"
+   GEMINI_API_KEY="your-gemini-key"
+   SARVAM_API_KEY="your-sarvam-key"
    ```
 
-3. **Run the Project**:
+3. **Run Dev Servers (Concurrently)**:
    ```bash
    npm run dev
    ```
-   This will concurrently start the backend server on [http://localhost:5000](http://localhost:5000) and the frontend dev server on [http://localhost:5173](http://localhost:5173).
+   *Frontend starts on http://localhost:5173 and Backend runs on http://localhost:5000.*
 
 ---
 
-### Method B: Manual Component Start
+## 🧬 Future Scope
 
-#### 1. Configure Environment Variables
-Create or verify the `.env` file in the `backend/` directory:
-```env
-PORT=5000
-DATABASE_URL="sqlite:///./dev.db"
-JWT_SECRET="super-secret-copilot-key-change-in-production"
-GROQ_API_KEY=""
-GEMINI_API_KEY=""
-```
-*Note: If no API keys are provided, the app will run in **Mock AI Mode**, generating fully structured outputs so you can test all features.*
+List improvements, extensions, or follow-up features:
 
-#### 2. Initialize & Start Backend
-Navigate to the `backend/` directory, install packages, and start the development server:
-```bash
-cd backend
-python -m pip install -r requirements.txt
-python -m uvicorn main:socket_app --port 5000 --reload
-```
-The FastAPI server starts on [http://localhost:5000](http://localhost:5000). Swagger documentation is available at [http://localhost:5000/docs](http://localhost:5000/docs).
+- 📈 **More integrations:** Native integrations for Slack webhook enhancements, Clickup, and Google Calendar.
+- 🛡️ **Security enhancements:** Secure audio stream encryption and role-based transcription access.
+- 🌐 **Localization / broader accessibility:** Real-time multi-lingual speech output translation using additional Sarvam models.
 
-#### 3. Start Frontend
-Navigate to the `frontend/` directory, install packages, and start the dev server:
-```bash
-cd frontend
-npm install --legacy-peer-deps
-npm run dev
-```
-Open [http://localhost:5173](http://localhost:5173) in your browser.
+---
 
+## 📎 Resources / Credits
+
+- **Sarvam AI** for regional speech processing & synthesis.
+- **LangGraph & LangChain** for multi-agent workflows.
+- **Qdrant Vector DB** for semantic database capabilities.
+- **LiveKit** for WebRTC connection streams.
+
+---
+
+## 🏁 Final Words
+
+Built during the hackathon, this project pushed us to combine real-time WebSockets, multi-agent frameworks, and vector search to build a polished, production-grade productivity suite. Designing for diverse local dialects and global timezones was challenging but highly rewarding!

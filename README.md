@@ -14,16 +14,16 @@
 - **Timezone Complexity:** Managing deadlines and action items across distributed global timezones makes post-meeting tracking complex.
 
 **Themes Selected (at least one):**
-- [x] 🟢 **Human Experience & Productivity**  
-- [ ] ⚪ Climate & Sustainability Systems  
-- [ ] ⚪ HealthTech & Bio Platforms  
-- [ ] ⚪ Learning & Knowledge Systems  
-- [x] 🟢 **Work, Finance & Digital Economy**  
-- [ ] ⚪ Infrastructure, Mobility & Smart Systems  
-- [ ] ⚪ Trust, Identity & Security  
-- [ ] ⚪ Media, Social & Interactive Platforms  
-- [ ] ⚪ Public Systems, Governance and Civic Tech  
-- [x] 🟢 **Developer Tools & Software Infrastructure**  
+- [x] Human Experience & Productivity  
+- [ ] Climate & Sustainability Systems  
+- [ ] HealthTech & Bio Platforms  
+- [ ] Learning & Knowledge Systems  
+- [x] Work, Finance & Digital Economy  
+- [ ] Infrastructure, Mobility & Smart Systems  
+- [ ] Trust, Identity & Security  
+- [ ] Media, Social & Interactive Platforms  
+- [ ] Public Systems, Governance and Civic Tech  
+- [x] Developer Tools & Software Infrastructure  
 
 *(You can select multiple themes if applicable)*
 

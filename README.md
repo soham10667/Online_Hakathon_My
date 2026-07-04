@@ -1,6 +1,8 @@
 <img width="4320" height="1440" alt="hh26 main poster 2 with sponsors 3x1 (4320 x 1440 px) (2)" src="https://github.com/user-attachments/assets/c698b2cd-da84-4cb0-9276-125c6a7244aa" />
 
 
+
+
 # 🚀 AI Meeting Copilot For Remote Teams
 
 > Interactive, real-time AI Meeting Copilot that streams conversations, extracts action items dynamically, identifies blockers/risks, and compiles professional meeting summaries and analytics.
